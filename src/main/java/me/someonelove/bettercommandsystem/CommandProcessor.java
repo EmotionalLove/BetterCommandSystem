@@ -7,14 +7,14 @@ import java.util.regex.Pattern;
 
 public class CommandProcessor {
 
-    private List<Command> commandRegistry = new ArrayList<>();
+    private List<ICommand> commandRegistry = new ArrayList<>();
     protected String commmandPrefix;
 
     public CommandProcessor(String commmandPrefix) {
         this.commmandPrefix = commmandPrefix;
     }
 
-    public void registerCommand(Command command) {
+    public void registerCommand(ICommand command) {
         if (command == null) return;
         commandRegistry.add(command);
     }
@@ -22,7 +22,7 @@ public class CommandProcessor {
     public boolean processCommand(String input) throws Exception {
         input = input.trim();
         if (!input.startsWith(commmandPrefix)) return false; // wrong prefix
-        for (Command command : this.commandRegistry) {
+        for (ICommand command : this.commandRegistry) {
             if (commandMatches(command, input)) {
                 boolean hasArgs = false;
                 String[] args = input.split(" ");
@@ -43,7 +43,7 @@ public class CommandProcessor {
         return false; // command not found
     }
 
-    private boolean commandMatches(Command cmd, String input) {
+    private boolean commandMatches(ICommand cmd, String input) {
         String name = cmd.getCommandName(this, true);
         return input.equalsIgnoreCase(name) || input.toLowerCase().startsWith(name + " ");
     }

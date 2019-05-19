@@ -1,6 +1,6 @@
 package me.someonelove.bettercommandsystem;
 
-public abstract class Command {
+public abstract class Command implements ICommand {
 
     private String commandName;
 
@@ -8,8 +8,7 @@ public abstract class Command {
         this.commandName = name;
     }
 
-    public abstract void onCommand(boolean hasArgs, String[] args);
-
+    @Override
     public final String getCommandName(CommandProcessor processor, boolean withPrefix) {
         return withPrefix ? processor.commmandPrefix + this.commandName : this.commandName;
     }
